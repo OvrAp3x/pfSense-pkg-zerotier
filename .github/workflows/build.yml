@@ -33,7 +33,8 @@ jobs:
         run: |
           git clone https://github.com/pfsense/FreeBSD-ports.git
           echo "ALLOW_UNSUPPORTED_SYSTEM=YES" > /etc/make.conf
-          cp -R * FreeBSD-ports/net/pfSense-pkg-zerotier
+          rsync -av --progress . FreeBSD-ports/net/pfSense-pkg-zerotier --exclude FreeBSD-ports
+          cd FreeBSD-ports/net/pfSense-pkg-zerotier
           make clean
           make package
           ls -l work/pkg
