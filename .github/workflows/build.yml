@@ -19,7 +19,7 @@ jobs:
     runs-on: macos-10.15
     name: A job to run test FreeBSD
     env:
-      MYTOKEN : ${{ secrets.MYTOKEN }}
+      #MYTOKEN : ${{ secrets.MYTOKEN }}
       MYTOKEN2: "value2"
     steps:
     - uses: actions/checkout@v2
@@ -27,10 +27,13 @@ jobs:
       id: test
       uses: vmactions/freebsd-vm@v0.1.2
       with:
-        envs: 'MYTOKEN MYTOKEN2'
+        envs: 'MYTOKEN2'
+        sync: sshfs
         usesh: true
         prepare: pkg install -y git curl
         run: |
+          mkdir /workdir
+          cd /workdir
           git clone https://github.com/pfsense/FreeBSD-ports.git
           echo "ALLOW_UNSUPPORTED_SYSTEM=YES" > /etc/make.conf
           rsync -av --progress . FreeBSD-ports/net/pfSense-pkg-zerotier --exclude FreeBSD-ports
