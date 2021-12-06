@@ -28,7 +28,7 @@ jobs:
       uses: vmactions/freebsd-vm@v0.1.3
       with:
         envs: 'MYTOKEN2'
-        sync: sshfs
+        #sync: sshfs
         usesh: true
         prepare: pkg install -y git curl
         run: |
